@@ -1,0 +1,13 @@
+package com.registro.registroapp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class RegistroAppApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(RegistroAppApplication.class, args);
+	}
+
+}
