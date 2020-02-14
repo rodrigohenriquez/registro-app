@@ -30,8 +30,3 @@ out/
 
 ### VS Code ###
 .vscode/
-.idea\
-bin\
-build\
-registro-app.iml
-.gradle\
