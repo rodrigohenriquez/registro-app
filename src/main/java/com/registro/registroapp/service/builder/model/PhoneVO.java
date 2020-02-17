@@ -10,7 +10,8 @@ public class PhoneVO implements Serializable {
     private String citycode;
     private String contrycode;
 
-    public PhoneVO(){}
+    public PhoneVO() {
+    }
 
     public Long getId() {
         return id;

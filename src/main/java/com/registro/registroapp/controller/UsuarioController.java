@@ -3,6 +3,8 @@ package com.registro.registroapp.controller;
 import com.registro.registroapp.service.UsuarioService;
 import com.registro.registroapp.service.builder.model.UsuarioVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -14,13 +16,14 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @PostMapping
-    public UsuarioVO save(@RequestBody UsuarioVO usuarioVO){
-        return usuarioService.save(usuarioVO);
+    public ResponseEntity<UsuarioVO> save(@RequestBody UsuarioVO usuarioVO){
+
+        return new ResponseEntity<>(usuarioService.save(usuarioVO), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public UsuarioVO find(@PathVariable("id") Long id){
-        return usuarioService.find(id);
+    public ResponseEntity<UsuarioVO> find(@PathVariable("id") Long id){
+        return new ResponseEntity<>(usuarioService.find(id), HttpStatus.OK);
     }
 
     @GetMapping
@@ -29,13 +32,13 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public UsuarioVO update(@RequestBody UsuarioVO usuarioVO){
-        return usuarioService.update(usuarioVO);
+    public ResponseEntity<UsuarioVO> update(@RequestBody UsuarioVO usuarioVO){
+        return new ResponseEntity<>(usuarioService.update(usuarioVO), HttpStatus.OK);
     }
 
     @DeleteMapping
-    public UsuarioVO delete(@RequestBody UsuarioVO usuarioVO){
-        return usuarioService.delete(usuarioVO);
+    public ResponseEntity<UsuarioVO> delete(@RequestBody UsuarioVO usuarioVO){
+        return new ResponseEntity<>(usuarioService.delete(usuarioVO), HttpStatus.ACCEPTED);
     }
 
 

@@ -3,7 +3,7 @@ package com.registro.registroapp.repository.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name= "phone")
+@Table(name = "phone")
 public class Phone {
 
     @Id
@@ -18,7 +18,8 @@ public class Phone {
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
 
-    public Phone(){}
+    public Phone() {
+    }
 
     public Long getId() {
         return id;

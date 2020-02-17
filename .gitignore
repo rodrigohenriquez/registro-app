@@ -35,3 +35,4 @@ bin\
 build\
 registro-app.iml
 .gradle\
+java\

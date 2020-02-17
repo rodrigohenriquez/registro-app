@@ -23,7 +23,7 @@ public class Usuario {
     private Date modified;
     @Column(name = "last_login")
     private Date lastLogin;
-    @Column(name = "token")
+    @Column(name = "token", length = 1000)
     private String token;
     @Column(name = "is_active")
     private Boolean isactive;
@@ -31,7 +31,8 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Phone> phones;
 
-    public Usuario(){}
+    public Usuario() {
+    }
 
     public Long getId() {
         return id;

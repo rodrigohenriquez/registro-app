@@ -18,7 +18,8 @@ public class UsuarioVO implements Serializable {
     private Boolean isactive;
     private List<PhoneVO> phones;
 
-    public UsuarioVO(){}
+    public UsuarioVO() {
+    }
 
     public Long getId() {
         return id;

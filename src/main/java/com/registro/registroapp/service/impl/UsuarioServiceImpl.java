@@ -8,11 +8,15 @@ import com.registro.registroapp.service.builder.UsuarioVOBuilder;
 import com.registro.registroapp.service.builder.VOBuilderFactory;
 import com.registro.registroapp.service.builder.model.UsuarioVO;
 import com.registro.registroapp.service.exception.CustomException;
-import com.registro.registroapp.service.exception.Message;
 import com.registro.registroapp.service.util.DateCalendar;
+import com.registro.registroapp.service.util.Message;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import io.jsonwebtoken.Jwts;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +28,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioVO save(UsuarioVO usuarioVO) {
+        usuarioVO.setToken(generateToken(usuarioVO.getEmail()));
         try {
             if (usuarioDAO.findByEmail(usuarioVO.getEmail()).getId() != null)
                 throw new Exception(Message.EMAIL_ALREADY_EXISTS);
@@ -35,12 +40,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioVO update(UsuarioVO usuarioVO) {
-        return VOBuilderFactory.getUsuarioVOBuilder(usuarioDAO.update(copy(new Usuario(), usuarioVO))).build();
+        if (usuarioVO.getId() == null) return null;
+        return VOBuilderFactory.getUsuarioVOBuilder(
+                usuarioDAO.update(copy(usuarioDAO.find(usuarioVO.getId()), usuarioVO))
+        ).build();
     }
 
     @Override
     public UsuarioVO delete(UsuarioVO usuarioVO) {
-        return VOBuilderFactory.getUsuarioVOBuilder(usuarioDAO.delete(copy(new Usuario(), usuarioVO))).build();
+        if (usuarioVO.getId() == null) return null;
+        return VOBuilderFactory.getUsuarioVOBuilder(
+                usuarioDAO.delete(usuarioDAO.find(usuarioVO.getId()))
+        ).build();
     }
 
     @Override
@@ -64,6 +75,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setCreated(DateCalendar.now());
         usuario.setModified(DateCalendar.now());
         usuario.setLastLogin(DateCalendar.now());
+        usuario.setToken(usuarioVO.getToken());
         if (usuarioVO.getPhones() != null) {
             usuario.setPhones(
                     usuarioVO.getPhones().stream()
@@ -85,5 +97,17 @@ public class UsuarioServiceImpl implements UsuarioService {
             usuario.setActive(usuarioVO.getActive());
         }
         return usuario;
+    }
+
+    private String generateToken(String usuario) {
+        Claims claims = Jwts.claims();
+        claims.put("usuario", usuario);
+        String token = Jwts.builder()
+                .setClaims(claims)
+                .setSubject(usuario)
+                .signWith(SignatureAlgorithm.HS512, Message.KEY.getBytes())
+                .setIssuedAt(new Date())
+                .compact();
+        return token;
     }
 }

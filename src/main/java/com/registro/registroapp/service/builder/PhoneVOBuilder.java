@@ -7,13 +7,13 @@ public class PhoneVOBuilder {
 
     private Phone phone;
 
-    public PhoneVOBuilder fromPhone(Phone phone){
+    public PhoneVOBuilder fromPhone(Phone phone) {
         this.phone = phone;
         return this;
     }
 
-    public PhoneVO build(){
-        if (phone == null)return null;
+    public PhoneVO build() {
+        if (phone == null) return null;
 
         PhoneVO phoneVO = new PhoneVO();
         phoneVO.setId(phone.getId());

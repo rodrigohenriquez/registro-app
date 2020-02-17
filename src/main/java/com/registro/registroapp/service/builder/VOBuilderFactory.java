@@ -5,7 +5,8 @@ import com.registro.registroapp.repository.model.Usuario;
 
 public class VOBuilderFactory {
 
-    private VOBuilderFactory(){}
+    private VOBuilderFactory() {
+    }
 
     public static UsuarioVOBuilder getUsuarioVOBuilder() {
         return new UsuarioVOBuilder();

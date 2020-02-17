@@ -19,34 +19,34 @@ public class PhoneServiceImpl implements PhoneService {
     private PhoneDAO phoneDAO;
 
     @Override
-    public PhoneVO save(PhoneVO phoneVO){
-        return VOBuilderFactory.getPhoneVOBuilder(phoneDAO.save(copy(new Phone() , phoneVO))).build();
+    public PhoneVO save(PhoneVO phoneVO) {
+        return VOBuilderFactory.getPhoneVOBuilder(phoneDAO.save(copy(new Phone(), phoneVO))).build();
     }
 
     @Override
-    public PhoneVO update(PhoneVO phoneVO){
-        return VOBuilderFactory.getPhoneVOBuilder(phoneDAO.update(copy(new Phone() , phoneVO))).build();
+    public PhoneVO update(PhoneVO phoneVO) {
+        return VOBuilderFactory.getPhoneVOBuilder(phoneDAO.update(copy(new Phone(), phoneVO))).build();
     }
 
     @Override
-    public PhoneVO delete(PhoneVO phoneVO){
-        return VOBuilderFactory.getPhoneVOBuilder(phoneDAO.delete(copy(new Phone() , phoneVO))).build();
+    public PhoneVO delete(PhoneVO phoneVO) {
+        return VOBuilderFactory.getPhoneVOBuilder(phoneDAO.delete(copy(new Phone(), phoneVO))).build();
     }
 
     @Override
-    public PhoneVO find(Long id){
+    public PhoneVO find(Long id) {
         return VOBuilderFactory.getPhoneVOBuilder(phoneDAO.find(id)).build();
     }
 
     @Override
-    public List<PhoneVO> list(){
+    public List<PhoneVO> list() {
         return phoneDAO.list().stream()
                 .map(VOBuilderFactory::getPhoneVOBuilder)
                 .map(PhoneVOBuilder::build)
                 .collect(Collectors.toList());
     }
 
-    private Phone copy(Phone phone, PhoneVO phoneVO){
+    private Phone copy(Phone phone, PhoneVO phoneVO) {
         return phone;
     }
 }
